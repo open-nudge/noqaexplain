@@ -1,0 +1,90 @@
+Metadata-Version: 2.4
+Name: mdformat_footnote
+Version: 0.1.2
+Summary: An mdformat plugin for parsing/validating footnotes
+Home-page: https://github.com/gaige/mdformat-footnote
+Keywords: mdformat,markdown,markdown-it
+Author: Gaige B. Paulsen
+Author-email: gaige@cluetrust.com
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Environment :: Plugins
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+License-File: LICENSE
+Requires-Dist: mdformat >=0.7.0
+Requires-Dist: mdit-py-plugins >=0.4.0
+Requires-Dist: pre-commit ; extra == "dev"
+Requires-Dist: pytest>=8.0.0 ; extra == "test"
+Requires-Dist: pytest-cov>=7.0.0 ; extra == "test"
+Provides-Extra: dev
+Provides-Extra: test
+
+# mdformat-footnote
+
+[![Build Status][ci-badge]][ci-link]
+[![codecov.io][cov-badge]][cov-link]
+[![PyPI version][pypi-badge]][pypi-link]
+
+Footnote format addition for [mdformat](https://github.com/executablebooks/mdformat).
+
+## Development
+
+This package utilises [flit](https://flit.readthedocs.io) as the build engine, and [tox](https://tox.readthedocs.io) for test automation.
+
+To install these development dependencies:
+
+```bash
+pip install tox
+```
+
+To run the tests:
+
+```bash
+tox
+```
+
+and with test coverage:
+
+```bash
+tox -e py310-cov
+```
+
+The easiest way to write tests, is to edit tests/fixtures.md
+
+To run the code formatting and style checks:
+
+```bash
+tox -e py310-pre-commit
+```
+
+or directly
+
+```bash
+pip install pre-commit
+pre-commit run --all
+```
+
+To run the pre-commit hook test:
+
+```bash
+tox -e py310-hook
+```
+
+## Publish to PyPi
+
+Publishing is handled using a trusted action as part of the release process. Authentication is via OIDC
+and should be triggered by creating a release with a tag equal to the version, e.g. `v0.0.1`.
+
+Maintainer note: this is configured in PyPI as a trusted repository.
+
+[ci-badge]: https://github.com/gaige/mdformat-footnote/workflows/CI/badge.svg?branch=master
+[ci-link]: https://github.com/gaige/mdformat-footnote/actions?query=workflow%3ACI+branch%3Amaster+event%3Apush
+[cov-badge]: https://codecov.io/gh/gaige/mdformat-footnote/branch/master/graph/badge.svg
+[cov-link]: https://codecov.io/gh/gaige/mdformat-footnote
+[pypi-badge]: https://img.shields.io/pypi/v/mdformat-footnote.svg
+[pypi-link]: https://pypi.org/project/mdformat-footnote
+
