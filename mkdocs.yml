@@ -6,15 +6,15 @@
 ---
 # yamllint disable rule:line-length
 site_name: >-
-  opentemplate
+  noqaexplain
 site_description: >-
-  All-in-one Python template. One click. Everything included.
+  Comply or explain - justify every ignored linting rule.
 site_url: >-
-  https://open-nudge.github.io/opentemplate/
+  https://open-nudge.github.io/noqaexplain/
 repo_url: >-
-  https://github.com/open-nudge/opentemplate
+  https://github.com/open-nudge/noqaexplain
 repo_name: >-
-  open-nudge/opentemplate
+  open-nudge/noqaexplain
 # yamllint enable rule:line-length
 
 exclude_docs: |

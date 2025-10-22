@@ -216,7 +216,7 @@ files = [
 
 [[package]]
 name = "basedpyright"
-version = "1.31.7"
+version = "1.32.0"
 requires_python = ">=3.8"
 summary = "static type checking for Python (but based)"
 groups = ["dev-all", "dev-typing"]
@@ -224,8 +224,8 @@ dependencies = [
     "nodejs-wheel-binaries>=20.13.1",
 ]
 files = [
-    {file = "basedpyright-1.31.7-py3-none-any.whl", hash = "sha256:7c54beb7828c9ed0028630aaa6904f395c27e5a9f5a313aa9e91fc1d11170831"},
-    {file = "basedpyright-1.31.7.tar.gz", hash = "sha256:394f334c742a19bcc5905b2455c9f5858182866b7679a6f057a70b44b049bceb"},
+    {file = "basedpyright-1.32.0-py3-none-any.whl", hash = "sha256:87b039c46b4804545518964005752d5e7af502f68c1594bc5fb66b33af2d0777"},
+    {file = "basedpyright-1.32.0.tar.gz", hash = "sha256:a5035b5a6dd65c71d5f7340bf4f00258892314299d953d97aa1ec52a64703ce9"},
 ]
 
 [[package]]
@@ -769,7 +769,7 @@ files = [
 
 [[package]]
 name = "cyclonedx-python-lib"
-version = "11.2.0"
+version = "11.3.0"
 requires_python = "<4.0,>=3.9"
 summary = "Python library for CycloneDX"
 groups = ["dev-all", "dev-release"]
@@ -781,26 +781,26 @@ dependencies = [
     "typing-extensions<5.0,>=4.6; python_version < \"3.13\"",
 ]
 files = [
-    {file = "cyclonedx_python_lib-11.2.0-py3-none-any.whl", hash = "sha256:94842258700a54000b23331b0aeabb8578d5fadf0f9abd80af33715bb01b36b1"},
-    {file = "cyclonedx_python_lib-11.2.0.tar.gz", hash = "sha256:f27a66f6c4cea6862ff828e597e4785082757d18afd8c3f8f5af0939a719a171"},
+    {file = "cyclonedx_python_lib-11.3.0-py3-none-any.whl", hash = "sha256:08094495d0cbbaddbe605f60f6e48ae98d29263386d7926df83ffe9bdea55f78"},
+    {file = "cyclonedx_python_lib-11.3.0.tar.gz", hash = "sha256:ee3135a59ead90397339ea585b341a7ea9c53e734ad13f48a9865cfcf0f1139a"},
 ]
 
 [[package]]
 name = "cyclonedx-python-lib"
-version = "11.2.0"
+version = "11.3.0"
 extras = ["validation"]
 requires_python = "<4.0,>=3.9"
 summary = "Python library for CycloneDX"
 groups = ["dev-all", "dev-release"]
 dependencies = [
-    "cyclonedx-python-lib==11.2.0",
+    "cyclonedx-python-lib==11.3.0",
     "jsonschema[format-nongpl]<5.0,>=4.25",
     "lxml<7,>=4",
     "referencing>=0.28.4",
 ]
 files = [
-    {file = "cyclonedx_python_lib-11.2.0-py3-none-any.whl", hash = "sha256:94842258700a54000b23331b0aeabb8578d5fadf0f9abd80af33715bb01b36b1"},
-    {file = "cyclonedx_python_lib-11.2.0.tar.gz", hash = "sha256:f27a66f6c4cea6862ff828e597e4785082757d18afd8c3f8f5af0939a719a171"},
+    {file = "cyclonedx_python_lib-11.3.0-py3-none-any.whl", hash = "sha256:08094495d0cbbaddbe605f60f6e48ae98d29263386d7926df83ffe9bdea55f78"},
+    {file = "cyclonedx_python_lib-11.3.0.tar.gz", hash = "sha256:ee3135a59ead90397339ea585b341a7ea9c53e734ad13f48a9865cfcf0f1139a"},
 ]
 
 [[package]]
