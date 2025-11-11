@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileContributor: szymonmaszke <github@maszke.co>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+---
+- id: "noqaexplain"
+  name: "noqaexplain"
+  description: "Comply or explain - justify every ignored linting rule."
+  language: "python"
+  entry: "noqaexplain"
+  args:
+    - "check"
+  types_or:
+    - "python"
+    - "rust"
+    - "javascript"
+    - "dockerfile"
+    - "shell"
+    - "yaml"
+...
