@@ -7,4 +7,5 @@ SPDX-License-Identifier: Apache-2.0
 
 # Roadmap
 
-<!-- Describe project's roadmap here. -->
+- Check for future needs
+- Extend with more languages (e.g. `ruby`)

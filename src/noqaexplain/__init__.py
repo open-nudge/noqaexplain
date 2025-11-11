@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Official documentation."""
+"""Official noqaexplain API documentation."""
 
 from __future__ import annotations
 

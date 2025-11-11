@@ -71,6 +71,8 @@ dynamic = [ "version" ]
 ###############################################################################
 
 dependencies = [
+  "lintkit[rich]>=1.1.1",
+  "loadfig>=0.1.0",
 ]
 
 urls.Changelog = "https://github.com/open-nudge/noqaexplain/blob/master/CHANGELOG.md"
@@ -78,6 +80,9 @@ urls.Documentation = "https://open-nudge.github.io/noqaexplain"
 urls.Homepage = "https://open-nudge.github.io/noqaexplain"
 urls.Issues = "https://github.com/open-nudge/noqaexplain/issues"
 urls.Repository = "https://github.com/open-nudge/noqaexplain"
+
+[project.scripts]
+noqaexplain = "noqaexplain._cli:main"
 
 [dependency-groups]
 dev-tests = [
@@ -584,6 +589,7 @@ reportPrivateUsage = "none"
 # Highlights non-issues in many cases and
 # hard to turn off file by file
 reportImportCycles = "none"
+reportImplicitOverride = "none"
 
 extraPaths = [
   #

@@ -60,7 +60,9 @@ Comply or explain - justify every ignored linting rule.
 
 ### Background
 
-TBD
+The project provides a way to document reasons for ignoring linting rules
+in codebases. Multiple languages are supported via parameters one
+can define in `pyproject.toml` or `.noqaexplain.toml`.
 
 ### Actors
 
@@ -74,11 +76,12 @@ TBD
 
 ### Goals
 
-TBD
+Improve codebase explainability and maintainability by providing reasons
+for ignoring linting rules.
 
 ### Non-goals
 
-TBD
+Performing code linting or analysis itself (left to specific linters).
 
 ## Self-assessment use
 
@@ -148,7 +151,9 @@ file.
 
 ### Incident response
 
-TBD
+As defined in [`SECURITY.md`](https://github.com/open-nudge/cogeol/blob/master/SECURITY.md#reporting-a-vulnerability),
+usually response should take up to a few working days, if not please reach out
+at `security@opennudge.com`.
 
 ## Appendix
 
