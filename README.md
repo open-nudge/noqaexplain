@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 SPDX-FileContributor: szymonmaszke <github@maszke.co>
 
 SPDX-License-Identifier: Apache-2.0
@@ -127,16 +127,14 @@ some_library._private_function()
 
 ### Configuration
 
-You can configure pynudger in `pyproject.toml` (or `.noqaexplain.toml`
+You can configure noqaexplain in `pyproject.toml` (or `.noqaexplain.toml`
 in the root of your project, just remove the `[tool.noqaexplain]` section),
 for example:
 
 ```toml
-[tool.noqexplain]
-# include rules by their code
-include_codes = [0] # default: all rules included
-# exclude rules by their code (takes precedence over include)
-exclude_codes = [1] # default: no rules excluded
+[tool.noqaexplain]
+# include rules by their complete, case-sensitive name
+names = ["ENQ0"] # default: all rules included
 # whether to exit after first error or all errors
 end_mode = "first" # default: "all"
 

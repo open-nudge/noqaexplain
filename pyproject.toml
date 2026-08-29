@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -71,7 +71,7 @@ dynamic = [ "version" ]
 ###############################################################################
 
 dependencies = [
-  "lintkit[rich]>=1.1.1",
+  "lintkit[rich]>=3.0.0",
   "loadfig>=0.1.0",
 ]
 
@@ -169,22 +169,6 @@ dev-citation = [
   "cffconvert @ git+https://github.com/citation-file-format/cffconvert@b6045d78aac9e02b039703b030588d54d53262ac",
 ]
 
-dev-security = [
-  # Semgrep may be a little rough for some releases, specify it ONLY for one version
-  #
-  #           DO NOT EDIT UNTIL end marker
-  #
-  # [[[cog
-  # import cog
-  # import cogeol
-  #
-  # cycle = cogeol.scientific()[-1]["cycle"]
-  # cog.out(f'''  "semgrep>=1; platform_system!='Windows' and python_version=='{cycle}'"''')
-  # ]]]
-  "semgrep>=1; platform_system!='Windows' and python_version=='3.12'"
-  # [[[end]]] (sum: xEbnmglzzV)
-]
-
 dev-github = [
   "zizmor>=1",
   "check-jsonschema>=0.31.2",
@@ -264,7 +248,6 @@ dev-all = [
   { include-group = "dev-pyproject" },
   { include-group = "dev-text" },
   { include-group = "dev-citation" },
-  { include-group = "dev-security" },
   { include-group = "dev-github" },
   { include-group = "dev-legal" },
   { include-group = "dev-release" },
@@ -320,6 +303,8 @@ lint.extend-ignore = [
   "ISC001",
   # Prefer absolute imports over relative imports from parent modules
   "TID252",
+  # Incorrectly mark files with proper licenses and headers
+  "CPY001",
 ]
 
 lint.extend-per-file-ignores."tests/**.py" = [
@@ -485,7 +470,6 @@ ignore_unused = [
   "mdformat-gfm",
   "mdformat_footnote",
   "mdformat_frontmatter",
-  "semgrep",
   "shellcheck-py",
   "termynal",
   "validate-pyproject",
@@ -977,24 +961,6 @@ check-symlink = "check-symlinks"
 check-toml = "check-toml"
 
 # End of separated pre-commit hooks
-
-check-security = { cmd = [
-  "semgrep",
-  "scan",
-  "--config=p/python",
-  "--config=p/secrets",
-  "--config=p/security-audit",
-  "--config=p/ci",
-  "--config=p/github-actions",
-  "--config=p/bandit",
-  "--config=p/gitleaks",
-  "--error",
-  "--metrics=off",
-  "--severity=INFO",
-  "--strict",
-  "{args:.}",
-] }
-
 
 check-renovate = { cmd = [
   "check-jsonschema",
