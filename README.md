@@ -131,6 +131,7 @@ e.g.:
 
 ```python
 import some_library
+
 # enq: Disabled private access check as there is no other workaround currently.
 # noqa: SLF001
 some_library._private_function()
