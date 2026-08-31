@@ -1,7 +1,9 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
+
+# noqa-file: PYNUDGER46
 
 """Test noqexplain rules by running the cli."""
 
@@ -20,6 +22,7 @@ from noqaexplain import _cli
         (pathlib.Path("tests/cases/fail/no_enoqa"), 0),
         (pathlib.Path("tests/cases/fail/short_enoqa"), 1),
         (pathlib.Path("tests/cases/pass"), None),
+        (pathlib.Path("tests/cases/names"), None),
     ),
 )
 def test_cli(

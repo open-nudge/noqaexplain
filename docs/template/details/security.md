@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 SPDX-FileContributor: szymonmaszke <github@maszke.co>
 
 SPDX-License-Identifier: Apache-2.0
@@ -80,7 +80,7 @@ Following [Open Source Security Foundation best practices](https://www.bestpract
 
 ## Adjustments
 
-Most security configurations (e.g., `check-security`, `check-workflow`) are in `pyproject.toml`.
+Most security configurations are in `.pre-commit-config.yaml` and `pyproject.toml`.
 Additional security workflows are in `.github/workflows` (prefix: `security-`).
 
 ### OSV Scanner
