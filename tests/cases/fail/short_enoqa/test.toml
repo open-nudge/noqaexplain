@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: © 2026 open-nudge <https://github.com/open-nudge>
+# SPDX-FileContributor: szymonmaszke <github@maszke.co>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# enq: no
+# noqa-start: ENQ1
+example = true
+# noqa-end: ENQ1

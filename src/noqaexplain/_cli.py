@@ -9,7 +9,6 @@
 
 from __future__ import annotations
 
-import pathlib
 import typing
 
 from importlib.metadata import version
@@ -17,7 +16,8 @@ from importlib.metadata import version
 import lintkit
 import loadfig
 
-from noqaexplain._match import Matcher
+from noqaexplain import _default
+from noqaexplain._matcher import Matcher
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
@@ -28,42 +28,6 @@ lintkit.settings.name = "ENQ"
 from noqaexplain import (  # noqa: E402
     _rule,  # noqa: F401  # pyright: ignore[reportUnusedImport]
 )
-
-
-def _files_default(
-    matcher: Matcher, config: dict[str, typing.Any]
-) -> Iterable[pathlib.Path]:
-    """Files to lint.
-
-    Args:
-        matcher:
-            The matcher to determine which files contain known noqa patterns.
-        config:
-            Configuration dictionary containing directory ignore settings.
-
-    Note:
-        File is yielded only if it matches one of the known
-        files containing known noqa patterns.
-
-    Yields:
-        Set of files with known noqa patterns.
-
-    """
-    ignores = set(
-        config.get(
-            "dir_ignores", ["__pypackages__", ".venv", ".git", "__pycache__"]
-        )
-    ) | set(config.get("extend_dir_ignores", []))
-
-    for path in pathlib.Path().rglob("*"):
-        if (
-            path.is_file()
-            and ignores.isdisjoint(path.parts)
-            and matcher.file(path)
-        ):
-            yield path.resolve()
-        else:  # pragma: no cover
-            pass
 
 
 def main(
@@ -95,7 +59,7 @@ def main(
 
     lintkit.cli.main(
         version=version(name),
-        files_default=_files_default(matcher, config),
+        files_default=_default.files(matcher, config),
         names=names,
         end_mode=config.get("end_mode", "all"),
         args=args,

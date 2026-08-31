@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -28,8 +28,12 @@ class Matcher:
     """
 
     config: dict[str, typing.Any]
-    suffix_mapping: dict[str, list[str]] = dataclasses.field(init=False)
-    name_mapping: dict[str, list[str]] = dataclasses.field(init=False)
+    mapping_suffix: dict[str, _default.mapping.NoqaComments] = (
+        dataclasses.field(init=False)
+    )
+    mapping_name: dict[str, _default.mapping.NoqaComments] = dataclasses.field(
+        init=False
+    )
 
     def __post_init__(self) -> None:
         """Initialize mappings.
@@ -38,10 +42,12 @@ class Matcher:
             Mappings can be provided (and extended) via configuration.
 
         """
-        self.suffix_mapping = self._full_mapping("suffix")
-        self.name_mapping = self._full_mapping("name")
+        self.mapping_suffix = self._full_mapping("suffix")
+        self.mapping_name = self._full_mapping("name")
 
-    def _full_mapping(self, name: str) -> dict[str, list[str]]:
+    def _full_mapping(
+        self, name: str
+    ) -> dict[str, _default.mapping.NoqaComments]:
         """Get full mapping for given name (suffix or name).
 
         Args:
@@ -53,16 +59,21 @@ class Matcher:
             Full mapping for given name.
 
         """
-        mapping: collections.defaultdict[str, list[str]] = (
+        configured_mapping = self.config.get(
+            f"mapping_{name}",
+            getattr(_default.mapping, name)(),  # noqa: PYNUDGER28
+        )
+        mapping: collections.defaultdict[str, _default.mapping.NoqaComments] = (
             collections.defaultdict(
                 list,
-                self.config.get(
-                    f"{name}_mapping", getattr(_default, f"{name}_mapping")()
-                ),
+                {
+                    extension: list(noqas)
+                    for extension, noqas in configured_mapping.items()
+                },
             )
         )
         for extension, noqas in self.config.get(
-            f"extend_{name}_mapping", {}
+            f"extend_mapping_{name}", {}
         ).items():
             mapping[extension].extend(noqas)  # pragma: no cover
 
@@ -83,9 +94,10 @@ class Matcher:
             List (possibly empty) of matching patterns.
 
         """
-        suffix_patterns = self.suffix_mapping.get(path.suffix, [])
-        suffix_patterns.extend(self.name_mapping.get(path.name, []))
-        return suffix_patterns
+        return [
+            *self.mapping_suffix.get(path.suffix, []),
+            *self.mapping_name.get(path.name, []),
+        ]
 
     def line(self, line: str, patterns: list[str]) -> int | None:
         """Match `line` against known patterns.

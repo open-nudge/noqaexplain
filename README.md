@@ -53,16 +53,23 @@ supporting __multiple formats/linters__:
 
 - __Python__ -[`ruff`](https://github.com/astral-sh/ruff) and
     [`flake8`](https://github.com/PyCQA/flake8) `# noqa`,
-    [`coveragepy`](https://github.com/nedbat/coveragepy) `# pragma: no cover`
+    [`coveragepy`](https://github.com/nedbat/coveragepy) `# pragma: no cover`,
+    and [`lintkit`](https://github.com/open-nudge/lintkit) line, span, and
+    file suppressions
 - __JavaScript/TypeScript__ - [`eslint`](https://github.com/eslint/eslint)
 - __Rust__ - [`clippy`](https://github.com/rust-lang/rust-clippy)
 - __Dockerfiles__ - [`hadolint`](https://github.com/hadolint/hadolint)
-- __YAML__ - [`yamllint`](https://github.com/adrienverge/yamllint)
+- __YAML__ - [`yamllint`](https://github.com/adrienverge/yamllint) and
+    `lintkit` line, span, and file suppressions
+- __TOML__ - `lintkit` line, span, and file suppressions
+- __Markdown__ - [`PyMarkdown`](https://github.com/jackdewinter/pymarkdown),
+    [`Vale`](https://vale.sh), and
+    [`md-dead-link-check`](https://github.com/AlexanderDokuchaev/md-dead-link-check)
 - __Shell__ - [`shellcheck`](https://www.shellcheck.net/)
 
 > [!IMPORTANT]
 > You can expand this list with __any__ language and linter by using
-> `extend_suffix_mapping` and/or `extend_name_mapping`!
+> `extend_mapping_suffix` and/or `extend_mapping_name`!
 > __Feel free to open a request to add support for more linters.__
 
 ## Table of contents
@@ -87,7 +94,13 @@ supporting __multiple formats/linters__:
 > instead of `pip`.
 
 ```sh
-> pip install noqaexplain
+> pip install noqaexplain[all]
+```
+
+To install `rich` output and MCP server as well:
+
+```sh
+> pip install noqaexplain[all]
 ```
 
 ### Usage
@@ -123,6 +136,28 @@ import some_library
 some_library._private_function()
 ```
 
+The same rule applies to opening span and file-wide `lintkit` directives:
+
+```toml
+# enq: Generated settings are checked separately before publication.
+# noqa-file: MYLINTER1
+
+# enq: This generated section cannot follow the repository style.
+# noqa-start: MYLINTER2
+generated = true
+# noqa-end: MYLINTER2
+```
+
+Markdown suppressions use an HTML comment for the explanation:
+
+```markdown
+<!-- enq: Generated content cannot satisfy the line length rule. -->
+<!-- pyml disable-next-line line-length -->
+```
+
+Markdown matching uses the literal comment prefixes `<!-- pyml`, `<!-- vale`,
+and `<!-- md-dead-link-check`. Every matching comment needs an explanation.
+
 ## Advanced
 
 ### Configuration
@@ -141,9 +176,9 @@ end_mode = "first" # default: "all"
 # Extends Python noqas mappings
 # Now every # my_noqa_header: will be treated as a noqa comment
 # and checked for explanations.
-extend_suffix_mapping = {".py" = ["# my_noqa_header:"]}
+extend_mapping_suffix = {".py" = ["# my_noqa_header:"]}
 # Target any MySuperFile.md file(s) and look for explanations
-extend_name_mapping = {"MySuperFile.md" = ["# my_noqa_header:"]}
+extend_mapping_name = {"MySuperFile.md" = ["# my_noqa_header:"]}
 ```
 
 > [!TIP]
@@ -172,7 +207,7 @@ repos:
 
 | Name   | Description                                                                                         |
 | ------ | --------------------------------------------------------------------------------------------------- |
-| `NQE0` | Ensures that all disabled linting rules have an associated explanation one line above them          |
+| `NQE0` | Ensures that all disabled linting rules have an explanation on the nearest preceding nonblank line  |
 | `NQE1` | Ensures that all disabled linting rules have an associated explanation of at least <minimal length> |
 
 and the following configurable options (in `pyproject.toml`
@@ -182,10 +217,10 @@ or `.noqaexplain.toml`):
 
 | Option                  | Description                                                                            | Affected rules | Default  |
 | ----------------------- | -------------------------------------------------------------------------------------- | -------------- | -------- |
-| `extend_suffix_mapping` | Additional file suffix to noqa comment(s) format mappings (dict of lists)              | __All__        | `{}`     |
-| `extend_name_mapping`   | Additional file name to noqas comment(s) format mappings (dict of lists)               | __All__        | `{}`     |
-| `suffix_mapping`        | File suffix to noqa comment format(s) mappings (dict of lists, __overrides default!__) | __All__        | `{}`     |
-| `name_mapping`          | File name to noqa comment format(s) mappings (dict of lists, __overrides default!__)   | __All__        | `{}`     |
+| `extend_mapping_suffix` | Additional file suffix to noqa comment(s) format mappings (dict of lists)              | __All__        | `{}`     |
+| `extend_mapping_name`   | Additional file name to noqas comment(s) format mappings (dict of lists)               | __All__        | `{}`     |
+| `mapping_suffix`        | File suffix to noqa comment format(s) mappings (dict of lists, __overrides default!__) | __All__        | `{}`     |
+| `mapping_name`          | File name to noqa comment format(s) mappings (dict of lists, __overrides default!__)   | __All__        | `{}`     |
 | `min_explain_length`    | Minimum length of explanation for disabled linting rules                               | NQE1           | 10       |
 | `explain_noqa_pattern`  | String identifying explanation for disabled linting rule                               | NQE0           | `"enq:"` |
 

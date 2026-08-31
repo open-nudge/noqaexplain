@@ -65,6 +65,18 @@ reason = "AIOHTTP is not used directly in this project (dev dependency)."
 
 [[PackageOverrides]]
 ecosystem = "PyPI"
+name = "uncalled-for"
+license.ignore = true
+reason = "dev dependency"
+
+[[PackageOverrides]]
+ecosystem = "PyPI"
+name = "pyperclip"
+license.ignore = true
+reason = "dev dependency"
+
+[[PackageOverrides]]
+ecosystem = "PyPI"
 name = "pynudger"
 license.ignore = true
 reason = "dev dependency"

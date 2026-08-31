@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: © 2026 open-nudge <https://github.com/open-nudge>
+# SPDX-FileContributor: szymonmaszke <github@maszke.co>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# enq: Generated settings are checked separately before publication.
+# noqa-file: ENQ0
+
+# enq: This generated section does not follow the repository style.
+# noqa-start: ENQ1
+generated = true
+# noqa-end: ENQ1
+
+# enq: This value intentionally uses the external system's spelling.
+external_name = "Example"  # noqa: ENQ0
