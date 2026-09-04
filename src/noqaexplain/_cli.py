@@ -14,15 +14,15 @@ import typing
 from importlib.metadata import version
 
 import lintkit
-import loadfig
 
-from noqaexplain import _default
+from noqaexplain import files
 from noqaexplain._matcher import Matcher
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
 
-lintkit.settings.name = "ENQ"
+lintkit.settings.name.rule = "ENQ"
+lintkit.settings.name.tool = "noqaexplain"
 
 # enoqa: Import all rules to register them (side-effect)
 from noqaexplain import (  # noqa: E402
@@ -48,20 +48,16 @@ def main(
     """
     name = "noqaexplain"
 
-    config = loadfig.config(name)
+    config = lintkit.config()
     matcher = Matcher(config)
 
-    lintkit.registry.inject("config", config)
     lintkit.registry.inject("matcher", matcher)
-
-    if names is None:  # pragma: no cover
-        names = config.get("names")
 
     lintkit.cli.main(
         version=version(name),
-        files_default=_default.files(matcher, config),
+        files_default=files.Default(matcher, config),
+        files_reader=files.Reader(matcher, config),
         names=names,
-        end_mode=config.get("end_mode", "all"),
         args=args,
         description="Comply or explain - justify every ignored linting rule.",
     )

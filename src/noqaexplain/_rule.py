@@ -42,7 +42,7 @@ class _Values(
         """
         matcher: Matcher = self.matcher
 
-        if patterns := matcher.file(self.file):
+        if patterns := matcher.file(self.file):  # pragma: no branch
             for row, line in enumerate(self._lines):
                 if (column := matcher.line(line, patterns)) is not None:
                     yield lintkit.Value(
@@ -50,8 +50,6 @@ class _Values(
                         lintkit.Pointer(row),
                         lintkit.Pointer(column),
                     )
-        else:  # pragma: no cover
-            pass
 
 
 class NoExplain(_Values, code=0):
@@ -67,7 +65,9 @@ class NoExplain(_Values, code=0):
             True if explanation is missing, False otherwise.
 
         """
-        return self.config.get("explain_noqa_pattern", "enq:") not in value
+        return (
+            self.matcher.config.get("explain_noqa_pattern", "enq:") not in value
+        )
 
     def message(self, _: lintkit.Value[str]) -> str:  # pyright: ignore[reportIncompatibleMethodOverride]
         """Display error message in case of rule violation.
@@ -93,7 +93,7 @@ class NoExplain(_Values, code=0):
             "Ensures that all disabled linting rules have an associated "
             "explanation on the nearest preceding nonblank line, "
             "starting with "
-            f"'{self.config.get('explain_noqa_pattern', 'enq:')}'."
+            f"'{self.matcher.config.get('explain_noqa_pattern', 'enq:')}'."
         )
 
 
@@ -114,13 +114,10 @@ class NoExplainShort(_Values, code=1):
             True if explanation is too short, False otherwise.
 
         """
-        if self.config.get("explain_noqa_pattern", "enq:") in value:
-            self._explanation_length: int = len(
-                value.split(self.config.get("explain_noqa_pattern", "enq:"))[
-                    1
-                ].strip()
-            )
-            return self._explanation_length < self.config.get(
+        pattern = self.matcher.config.get("explain_noqa_pattern", "enq:")
+        if pattern in value:
+            self._explanation_length: int = len(value.split(pattern)[1].strip())
+            return self._explanation_length < self.config(
                 "min_explain_length", 10
             )
 
@@ -143,7 +140,7 @@ class NoExplainShort(_Values, code=1):
         return (
             "Noqa explanation (enq) too short "
             f"(got {explanation_length} chars, minimum is "
-            f"{self.config.get('min_explain_length', 10)} chars)."
+            f"{self.config('min_explain_length', 10)} chars)."
         )
 
     def description(self) -> str:
@@ -156,7 +153,7 @@ class NoExplainShort(_Values, code=1):
         return (
             "Ensures that all disabled linting rules have an associated "
             "explanation with the length of at least "
-            f"'{self.config.get('explain_noqa_pattern', 'enq:')}', "
+            f"'{self.matcher.config.get('explain_noqa_pattern', 'enq:')}', "
             "and that the explanation is of sufficient length."
         )
 

@@ -71,19 +71,18 @@ dynamic = [ "version" ]
 ###############################################################################
 
 dependencies = [
-  "lintkit>=3.0.0",
-  "loadfig>=0.1.0",
+  "lintkit[config]>=4",
 ]
 
 optional-dependencies.rich = [
-  "lintkit[rich]>=3.0.0",
+  "lintkit[rich]>=4",
 ]
 optional-dependencies.mcp = [
-  "lintkit[mcp]>=3.0.0"
+  "lintkit[mcp]>=4"
 ]
 optional-dependencies.all = [
-  "lintkit[rich]",
-  "lintkit[mcp]"
+  "lintkit[rich]>=4",
+  "lintkit[mcp]>=4"
 ]
 
 urls.Changelog = "https://github.com/open-nudge/noqaexplain/blob/master/CHANGELOG.md"
@@ -447,6 +446,9 @@ exclude_also = [
   "if typing.TYPE_CHECKING:",
   "class .*\\bProtocol\\):",
   "@(abc\\.)?abstractmethod",
+]
+partial_branches = [
+  "#\\s*(pragma|PRAGMA)[:\\s]?\\s*(no|NO)\\s*(branch|BRANCH)",
 ]
 
 fail_under = 100
