@@ -3,12 +3,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Module providing defaults of noqaexplain."""
+[tool.noqaexplain]
+explain_noqa_pattern = "why:"
+extend_mapping_suffix = { ".ini" = ["# suppress:"] }
 
-from __future__ import annotations
-
-from noqaexplain._default import mapping
-
-__all__ = [
-    "mapping",
-]
+[tool.noqaexplain.ENQ1]
+min_explain_length = 3

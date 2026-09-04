@@ -169,10 +169,7 @@ for example:
 
 ```toml
 [tool.noqaexplain]
-# include rules by their complete, case-sensitive name
-names = ["ENQ0"] # default: all rules included
-# whether to exit after first error or all errors
-end_mode = "first" # default: "all"
+explain_noqa_pattern = "enq:"
 
 # Extends Python noqas mappings
 # Now every # my_noqa_header: will be treated as a noqa comment
@@ -180,6 +177,15 @@ end_mode = "first" # default: "all"
 extend_mapping_suffix = {".py" = ["# my_noqa_header:"]}
 # Target any MySuperFile.md file(s) and look for explanations
 extend_mapping_name = {"MySuperFile.md" = ["# my_noqa_header:"]}
+
+[tool.noqaexplain.ENQ1]
+min_explain_length = 10
+```
+
+Select rules and stopping behavior with CLI flags, for example:
+
+```sh
+noqaexplain check --names ENQ0 --end_mode first
 ```
 
 > [!TIP]
@@ -211,10 +217,10 @@ repos:
 | `NQE0` | Ensures that all disabled linting rules have an explanation on the nearest preceding nonblank line  |
 | `NQE1` | Ensures that all disabled linting rules have an associated explanation of at least <minimal length> |
 
-and the following configurable options (in `pyproject.toml`
-or `.noqaexplain.toml`):
+Shared options belong in `[tool.noqaexplain]` (or at the root of
+`.noqaexplain.toml`):
 
-<!-- pyml disable-num-lines 10 line-length-->
+<!-- pyml disable-num-lines 18 line-length-->
 
 | Option                  | Description                                                                            | Affected rules | Default  |
 | ----------------------- | -------------------------------------------------------------------------------------- | -------------- | -------- |
@@ -222,8 +228,15 @@ or `.noqaexplain.toml`):
 | `extend_mapping_name`   | Additional file name to noqas comment(s) format mappings (dict of lists)               | __All__        | `{}`     |
 | `mapping_suffix`        | File suffix to noqa comment format(s) mappings (dict of lists, __overrides default!__) | __All__        | `{}`     |
 | `mapping_name`          | File name to noqa comment format(s) mappings (dict of lists, __overrides default!__)   | __All__        | `{}`     |
-| `min_explain_length`    | Minimum length of explanation for disabled linting rules                               | NQE1           | 10       |
-| `explain_noqa_pattern`  | String identifying explanation for disabled linting rule                               | NQE0           | `"enq:"` |
+| `dir_ignores`           | Directory names ignored during default file discovery                                  | __All__        | standard |
+| `extend_dir_ignores`    | Additional directory names ignored during default file discovery                       | __All__        | `[]`     |
+| `explain_noqa_pattern`  | String identifying explanation for disabled linting rule                               | __All__        | `"enq:"` |
+
+ENQ1 options belong in `[tool.noqaexplain.ENQ1]`:
+
+| Option               | Description                                                   | Default |
+| -------------------- | ------------------------------------------------------------- | ------- |
+| `min_explain_length` | Minimum char length of explanation for disabled linting rules | 10      |
 
 ## Contribute
 

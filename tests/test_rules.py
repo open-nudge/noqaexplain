@@ -17,16 +17,19 @@ from noqaexplain import _cli
 
 
 @pytest.mark.parametrize(
-    ("directory", "error_code"),
+    ("directory", "names", "error_code"),
     (
-        (pathlib.Path("tests/cases/fail/no_enoqa"), 0),
-        (pathlib.Path("tests/cases/fail/short_enoqa"), 1),
-        (pathlib.Path("tests/cases/pass"), None),
-        (pathlib.Path("tests/cases/names"), None),
+        (pathlib.Path("tests/cases/fail/no_enoqa"), None, 0),
+        (pathlib.Path("tests/cases/fail/short_enoqa"), None, 1),
+        (pathlib.Path("tests/cases/pass"), None, None),
+        (pathlib.Path("tests/cases/names"), ("ENQ1",), None),
+        (pathlib.Path("tests/cases/config"), ("ENQ0",), None),
+        (pathlib.Path("tests/cases/config"), ("ENQ1",), 1),
     ),
 )
 def test_cli(
     directory: pathlib.Path,
+    names: tuple[str, ...] | None,
     error_code: int | None,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
@@ -36,6 +39,8 @@ def test_cli(
     Args:
         directory:
             Test directory to use as a pseudo-root of the project.
+        names:
+            Rule names to select programmatically.
         error_code:
             Expected error code, if any.
         monkeypatch:
@@ -46,7 +51,7 @@ def test_cli(
     """
     monkeypatch.chdir(pathlib.Path.cwd() / directory)
     try:
-        _cli.main(args=["check"])
+        _cli.main(args=["check"], names=names)
     except SystemExit as e:
         if error_code is None:
             assert e.code == 0  # noqa: PT017
